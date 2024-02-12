@@ -1,6 +1,7 @@
 ### Challenge service Kafka consumer for leaderboard changes
 
 - Kafka consumer for updating the leaderboard cache in Redis
+- It simply compares the last change timestamp of the updated leaderboard with the current timestamp, if it is greater than 500ms (throttle duration), it fetches the top-10 user from Redis with **ZREVRANGE** and publishes it as a "leaderboard" topic. It also puts this cache in Redis.
 
 ```java
 @KafkaListener(
